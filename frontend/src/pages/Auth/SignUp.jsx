@@ -20,6 +20,12 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault()
 
+
+    if (!formData.fullName) {
+      setError("Please enter your name")
+      return
+    }
+
     if (!validateEmail (formData.email)) {
       setError("Please enter a valid email address")
       return
@@ -51,7 +57,7 @@ const SignUp = () => {
 
         <form onSubmit={handleSignUp}>
           <ProfilePhotoSelector image={formData.profilePic} setImage={(file) => setFormData(prev => ({...prev, profilePic: file}))} />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
             <FormInput
               name="fullName"
               type="text"
@@ -82,12 +88,12 @@ const SignUp = () => {
           {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
 
             <button type="submit" className="btn-primary">
-              SignUp
+              SIGN UP
             </button>
 
             <p className="text-[13px] text-slate-800 mt-3">
-              Dont have an account {" "}
-              <Link to='/signup' className="font-medium text-primary underline">Sign Up</Link>
+              Already have an account? {" "}
+              <Link to='/login' className="font-medium text-primary underline">Login</Link>
             </p>
         </form>
       </div>
