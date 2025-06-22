@@ -5,6 +5,7 @@ import connectDB from './config/db.js'
 import authRoutes from './routes/auth.route.js'
 import incomeRoutes from './routes/income.route.js'
 import expenseRoutes from './routes/expense.route.js'
+import dashboardRoutes from './routes/dashboard.route.js'
 import path from 'path'
 import { fileURLToPath } from 'url';
 
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/income', incomeRoutes)
 app.use('/api/v1/expense', expenseRoutes)
+app.use('/api/v1/dashboard', dashboardRoutes)
 
 
 // Serve upload folder

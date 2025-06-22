@@ -1,9 +1,17 @@
 
-npm init -y
 
-# Backend Dependences install
-npm i express jsonwebtoken mongoose dotenv cors bcryptjs multer xlsx
-npm i nodemon --save-dev
+## Backend Packages
+| Packages                |
+| --------------------------- |
+| `nodemon`                    | `npm i nodemon --save-dev`  |
+| `express`               |
+| `jsonwebtoken`            |
+| `mongoose`           |
+| `dotenv`          |
+| `cors`             |
+| `bcryptjs`             |
+| `multer`              |
+| `xlsx`  |
 
 
 ## Error Messages
