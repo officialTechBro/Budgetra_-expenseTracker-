@@ -1,8 +1,11 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import AuthLayout from "../../components/layouts/AuthLayout"
 import FormInput from "../../components/Inputs/FormInput"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { validateEmail } from "../../utils/helper"
+import axiosInstance from "../../utils/axiosInstance"
+import { API_PATHS } from "../../utils/apiPaths"
+import { UserContext } from "../../context/userContext"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -11,23 +14,39 @@ const Login = () => {
   })
   const [error, setError] = useState(null)
 
+  const {updateUser} = useContext(UserContext)
+
+  const navigate = useNavigate()
+
   // handle Login 
   const handleLogin = async (e) => {
     e.preventDefault()
 
-    if (!validateEmail (formData.email)) {
-      setError("Please enter a valid email address")
-      return
-    }
-
-    if (!formData.password) {
-      setError("Please enter a password")
-      return
-    }
-
+    if (!validateEmail (formData.email)) return setError("Please enter a valid email address")
+    if (!formData.password) return setError("Please enter a password")
+    
     setError("")
 
     // Login API Call
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email: formData.email,
+        password: formData.password,
+      })
+
+      const {token, user} = response.data
+      if (token) {
+        localStorage.setItem("token", token)
+        updateUser(user)
+        navigate("/dashboard")
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message)
+      } else {
+        setError("Something went wrong. Please try again")
+      }
+    }
   }
 
   const handleChange = (e) => {

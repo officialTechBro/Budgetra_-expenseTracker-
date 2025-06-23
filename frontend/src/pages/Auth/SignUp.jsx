@@ -1,9 +1,13 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import AuthLayout from "../../components/layouts/AuthLayout"
 import FormInput from "../../components/Inputs/FormInput"
 import { Link, useNavigate } from "react-router-dom"
 import { validateEmail } from "../../utils/helper"
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector"
+import axiosInstance from "../../utils/axiosInstance"
+import { API_PATHS } from "../../utils/apiPaths"
+import { UserContext } from "../../context/userContext"
+import uploadImage from "../../utils/uploadImage"
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -14,31 +18,53 @@ const SignUp = () => {
   })
   const [error, setError] = useState(null)
 
-  // const navigate = useNavigate
+  const {updateUser} = useContext(UserContext)
+
+  const navigate = useNavigate()
 
   // handle SignUp 
   const handleSignUp = async (e) => {
     e.preventDefault()
 
 
-    if (!formData.fullName) {
-      setError("Please enter your name")
-      return
-    }
-
-    if (!validateEmail (formData.email)) {
-      setError("Please enter a valid email address")
-      return
-    }
-
-    if (!formData.password) {
-      setError("Please enter a password")
-      return
-    }
-
+    if (!formData.fullName) return setError("Please enter your name")
+    if (!validateEmail (formData.email)) return setError("Please enter a valid email address")
+    if (!formData.password) return setError("Please enter a password")
+   
     setError("")
 
     // SignUp API Call
+     try {
+
+      let profileImageUrl = ""
+
+      // Upload image if present 
+      if (formData.profilePic) {
+        const imgUploadResponse = await uploadImage(formData.profilePic)
+        console.log(imgUploadResponse)
+        profileImageUrl = imgUploadResponse.imageUrl  || ""
+      }
+
+      const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        profileImageUrl
+      })
+
+      const {token, user} = response.data
+      if (token) {
+        localStorage.setItem("token", token)
+        updateUser(user)
+        navigate("/dashboard")
+      }
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message)
+      } else {
+        setError("Something went wrong. Please try again")
+      }
+    }
   }
 
   const handleChange = (e) => {
