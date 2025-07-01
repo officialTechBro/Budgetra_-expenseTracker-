@@ -24,4 +24,13 @@ export const addThousandSeparator = (num) => {
     const formattedInteger = int.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   
     return frac ? `${formattedInteger}.${frac}` : formattedInteger;
-  };
+}
+
+export const prepareExpenseBarChartData = (data = []) => {
+    const chartData = data.map((item) => ({
+        category: item?.category,
+        amount: item?.amount
+    }))
+
+    return chartData
+}

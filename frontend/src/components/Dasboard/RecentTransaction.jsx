@@ -2,7 +2,6 @@ import { LuArrowRight } from "react-icons/lu"
 import moment from 'moment'
 import TransactionInfoCard from "../cards/TransactionInfoCard"
 const RecentTransactions = ({transactions, onSeeMore}) => {
-    console.log(transactions)
   return <div className="card">
     <div className="flex items-center justify-between">
         <h5 className="text-lg">Recent Transaction</h5>
