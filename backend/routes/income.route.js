@@ -12,7 +12,7 @@ const incomeRoutes = Router()
 
 incomeRoutes.post('/add', protect, addIncome)
 incomeRoutes.get('/get', protect, getAllIncome)
-incomeRoutes.post('/downloadexcel', protect, downloadIncomeExcel)
+incomeRoutes.get('/downloadexcel', protect, downloadIncomeExcel)
 incomeRoutes.delete('/:id', protect, deleteIncome)
 
 export default incomeRoutes

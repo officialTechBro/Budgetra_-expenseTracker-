@@ -12,7 +12,7 @@ const expenseRoutes = Router()
 
 expenseRoutes.post('/add', protect, addExpense)
 expenseRoutes.get('/get', protect, getAllExpense)
-expenseRoutes.post('/downloadexcel', protect, downloadExpenseExcel)
+expenseRoutes.get('/downloadexcel', protect, downloadExpenseExcel)
 expenseRoutes.delete('/:id', protect, deleteExpense)
 
 export default expenseRoutes
