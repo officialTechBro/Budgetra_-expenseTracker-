@@ -14,7 +14,7 @@ const CustomBarChart = ({data}) => {
 
     // Alternate Color
     const getBarColor =(index) => {
-        return index % 2 === 0 ? "#875cf5" : "#cfbefb"
+        return index % 2 === 0 ? "#6C5DD3" : "#A084E8";
     }
 
     const CustomTooltip = ({active, payload}) => {
@@ -38,7 +38,7 @@ const CustomBarChart = ({data}) => {
             <BarChart data={data}>
                 <CartesianGrid stroke="none" />
 
-                <XAxis dataKey="months" tick={{fontSize: 12, fill: '#555'}} stroke="none" />
+                <XAxis dataKey="amount" tick={{fontSize: 12, fill: '#555'}} stroke="none" />
                 <YAxis tick={{fontSize: 12, fill: '#555'}} stroke="none" />
 
                 <Tooltip content={CustomTooltip} />
@@ -49,10 +49,13 @@ const CustomBarChart = ({data}) => {
                     radius={[10, 10, 0, 0]}
                     activeDot={{ r: 8, fill: "yellow" }}
                     activeStyle={{ fill: "green"}}
-                />
-                    {data.map((entry, index) => (
-                        <Cell key={index} fill={getBarColor(index)} />
-                    ))}
+                >
+                    {Array.isArray(data) &&
+                        data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={getBarColor(index)} />
+                        ))}
+                    
+                </Bar>
             </BarChart>
         </ResponsiveContainer>
     </div>
