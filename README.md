@@ -1,4 +1,4 @@
-# 💰 Expense & Income Tracker Dashboard
+# 💰 Budgetra - Expense & Income Tracker Dashboard
 
 A modern web-based application for tracking expenses and incomes. Easily monitor financial activities, visualize summaries, and manage entries with an intuitive interface.
 
