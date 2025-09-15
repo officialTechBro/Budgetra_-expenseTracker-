@@ -9,7 +9,7 @@ const FormInput = ({value, type, name, placeholder, onChange, label }) => {
     }
   return (
     <div>
-        <label htmlFor="email" className="text-[13px] text-slate-800">{label}</label>
+        <label htmlFor={name} className="text-[13px] text-slate-800">{label}</label>
 
         <div className="input-box">
             <input 
@@ -27,13 +27,13 @@ const FormInput = ({value, type, name, placeholder, onChange, label }) => {
                         <FaRegEye
                             size={22}
                             className="text-primary cursor-pointer"
-                            onClick={() => toggleShowPassword()}
+                            onClick={toggleShowPassword}
                         />
                     ) : (
                         <FaRegEyeSlash
                             size={22}
                             className="text-slate-400 cursor-pointer"
-                            onClick={() => toggleShowPassword()}
+                            onClick={toggleShowPassword}
                         />
                     )}
                 </>
