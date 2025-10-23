@@ -24,7 +24,7 @@ app.use(cors({
 
 app.use(express.json())
 
-
+connectDB()
 
 
 app.get("/", (req, res) => {
@@ -42,8 +42,6 @@ app.use('/uploads', express.static(path.join(__dirname, "uploads")))
 
 
 const PORT = process.env.PORT || 8000
-app.listen(PORT, async () => {
+app.listen(PORT, () => {
     console.log(`Server connected to port: ${PORT}`)
-
-    await connectDB()
 })
